@@ -60,11 +60,11 @@ export const renderPage = async ({
     // page preload & prefetch links
     .replace(
       '<!--vuepress-ssr-resources-->',
-      `${renderPagePreloadLinks({
+      `${await renderPagePreloadLinks({
         app,
         outputEntryChunk,
         pageChunkFiles,
-      })}${renderPagePrefetchLinks({
+      })}${await renderPagePrefetchLinks({
         app,
         outputEntryChunk,
         pageChunkFiles,
@@ -73,13 +73,13 @@ export const renderPage = async ({
     // page styles
     .replace(
       '<!--vuepress-ssr-styles-->',
-      renderPageStyles({ app, outputCssAsset })
+      await renderPageStyles({ app, outputCssAsset })
     )
     .replace('<!--vuepress-ssr-app-->', pageRendered)
     // page scripts
     .replace(
       '<!--vuepress-ssr-scripts-->',
-      renderPageScripts({ app, outputEntryChunk })
+      await renderPageScripts({ app, outputEntryChunk })
     )
 
   // write html file
