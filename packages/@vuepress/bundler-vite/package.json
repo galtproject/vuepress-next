@@ -1,6 +1,6 @@
 {
   "name": "@galtproject/vuepress-bundler-vite",
-  "version": "2.0.0-beta.27.13",
+  "version": "2.0.0-beta.27.15",
   "description": "Bundler vite package of VuePress",
   "keywords": [
     "vuepress-bundler",

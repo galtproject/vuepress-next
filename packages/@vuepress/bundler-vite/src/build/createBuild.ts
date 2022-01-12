@@ -41,7 +41,9 @@ export const createBuild = (
   ) as OutputAsset;
 
   const { bundlerConfig } = app.options;
+  console.log('bundlerConfig', bundlerConfig);
   if (bundlerConfig && bundlerConfig.storeAsset) {
+    console.log('bundlerConfig.storeAsset');
     await bundlerConfig.storeAsset(clientCssAsset.source);
 
     await bundlerConfig.storeAsset(clientEntryChunk.code);
