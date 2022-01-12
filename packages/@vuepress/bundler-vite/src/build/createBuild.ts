@@ -30,20 +30,27 @@ export const createBuild = (
       build(clientConfig) as Promise<RollupOutput>,
       build(serverConfig) as Promise<RollupOutput>,
     ])
-  })
+  });
+
+  // get client bundle entry chunk and css asset
+  const clientEntryChunk = clientOutput.output.find(
+    (item) => item.type === 'chunk' && item.isEntry
+  ) as OutputChunk;
+  const clientCssAsset = clientOutput.output.find(
+    (item) => item.type === 'asset' && item.fileName.endsWith('.css')
+  ) as OutputAsset;
+
+  const { bundlerConfig } = app.options;
+  if (bundlerConfig && bundlerConfig.storeAsset) {
+    await bundlerConfig.storeAsset(clientCssAsset.source);
+
+    await bundlerConfig.storeAsset(clientEntryChunk.code);
+  }
 
   // render pages
   await withSpinner('Rendering pages')(async () => {
     // load ssr template file
     const ssrTemplate = (await fs.readFile(app.options.templateSSR)).toString()
-
-    // get client bundle entry chunk and css asset
-    const clientEntryChunk = clientOutput.output.find(
-      (item) => item.type === 'chunk' && item.isEntry
-    ) as OutputChunk
-    const clientCssAsset = clientOutput.output.find(
-      (item) => item.type === 'asset' && item.fileName.endsWith('.css')
-    ) as OutputAsset
 
     // get server bundle entry chunk
     const serverEntryChunk = serverOutput.output.find(
