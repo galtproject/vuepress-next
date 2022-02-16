@@ -1,6 +1,5 @@
 import type { App } from '@vuepress/core'
-import type { OutputChunk } from 'rollup'
-const {getIpfsHashFromString} = require('geesome-libs/src/ipfsHelper');
+import {OutputIpfsChunk} from "./interface";
 
 /**
  * Render scripts of current page
@@ -10,11 +9,11 @@ export const renderPageScripts = async ({
   outputEntryChunk,
 }: {
   app: App
-  outputEntryChunk: OutputChunk
+  outputEntryChunk: OutputIpfsChunk
 }): Promise<string> => {
   const {baseStorageUri} = app.options.bundlerConfig || {};
-  if (baseStorageUri) {
-    return `<link rel="stylesheet" href="${baseStorageUri}${await getIpfsHashFromString(outputEntryChunk.code)}">`;
+  if (outputEntryChunk.ipfsHash) {
+    return `<link rel="stylesheet" href="${baseStorageUri}${outputEntryChunk.ipfsHash}">`;
   } else {
     return `<script type="module" src="${app.options.base}${outputEntryChunk.fileName}" defer></script>`;
   }

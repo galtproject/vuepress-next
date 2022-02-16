@@ -1,6 +1,6 @@
 {
   "name": "@galtproject/vuepress-bundler-vite",
-  "version": "2.0.0-beta.27.15",
+  "version": "2.0.0-beta.27.18",
   "description": "Bundler vite package of VuePress",
   "keywords": [
     "vuepress-bundler",
@@ -22,10 +22,10 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "yarn && tsc -b tsconfig.build.json",
-    "build-and-publish": "cp package.json lib/ && npm publish ./lib --access public"
+    "build-and-publish": "npm run build && cp package.json lib/ && npm publish ./lib --access public"
   },
   "dependencies": {
-    "geesome-libs": "https://github.com/galtproject/geesome-libs#38f61c3",
+    "geesome-libs": "https://github.com/galtproject/geesome-libs#e31a46a",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vue/compiler-sfc": "^3.2.20",
     "@vue/server-renderer": "^3.2.20",

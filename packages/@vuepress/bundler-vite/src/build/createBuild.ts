@@ -1,11 +1,12 @@
 import type { CreateVueAppFunction } from '@vuepress/client'
 import type { App, Bundler } from '@vuepress/core'
 import { chalk, fs, ora, withSpinner } from '@vuepress/utils'
-import type { OutputAsset, OutputChunk, RollupOutput } from 'rollup'
+import type { OutputChunk, RollupOutput } from 'rollup'
 import { build } from 'vite'
 import type { ViteBundlerOptions } from '../types'
 import { renderPage } from './renderPage'
 import { resolveViteConfig } from './resolveViteConfig'
+import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
 
 export const createBuild = (
   options: ViteBundlerOptions
@@ -35,18 +36,19 @@ export const createBuild = (
   // get client bundle entry chunk and css asset
   const clientEntryChunk = clientOutput.output.find(
     (item) => item.type === 'chunk' && item.isEntry
-  ) as OutputChunk;
+  ) as OutputIpfsChunk;
   const clientCssAsset = clientOutput.output.find(
     (item) => item.type === 'asset' && item.fileName.endsWith('.css')
-  ) as OutputAsset;
+  ) as OutputIpfsAsset;
 
   const { bundlerConfig } = app.options;
   console.log('bundlerConfig', bundlerConfig);
   if (bundlerConfig && bundlerConfig.storeAsset) {
     console.log('bundlerConfig.storeAsset');
-    await bundlerConfig.storeAsset(clientCssAsset.source);
-
-    await bundlerConfig.storeAsset(clientEntryChunk.code);
+    clientCssAsset.ipfsHash = await bundlerConfig.storeAsset(clientCssAsset.source);
+    console.log('clientCssAsset.ipfsHash', clientCssAsset.ipfsHash);
+    clientEntryChunk.ipfsHash = await bundlerConfig.storeAsset(clientEntryChunk.code);
+    console.log('clientEntryChunk.ipfsHash', clientEntryChunk.ipfsHash);
   }
 
   // render pages

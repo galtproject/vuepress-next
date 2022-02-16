@@ -1,6 +1,5 @@
 import type { App } from '@vuepress/core'
-import type { OutputAsset } from 'rollup'
-const {getIpfsHashFromString} = require('geesome-libs/src/ipfsHelper');
+import {OutputIpfsAsset} from "./interface";
 
 /**
  * Render styles of current page
@@ -10,11 +9,11 @@ export const renderPageStyles = async ({
   outputCssAsset,
 }: {
   app: App
-  outputCssAsset: OutputAsset
+  outputCssAsset: OutputIpfsAsset
 }): Promise<string> => {
   const {baseStorageUri} = app.options.bundlerConfig || {};
-  if (baseStorageUri) {
-    return `<link rel="stylesheet" href="${baseStorageUri}${await getIpfsHashFromString(outputCssAsset.source)}">`;
+  if (outputCssAsset.ipfsHash) {
+    return `<link rel="stylesheet" href="${baseStorageUri}${outputCssAsset.ipfsHash}">`;
   } else {
     return `<link rel="stylesheet" href="${app.options.base}${outputCssAsset.fileName}">`;
   }
