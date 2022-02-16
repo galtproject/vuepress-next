@@ -10,6 +10,7 @@ import { renderPagePreloadLinks } from './renderPagePreloadLinks'
 import { renderPageScripts } from './renderPageScripts'
 import { renderPageStyles } from './renderPageStyles'
 import { resolvePageChunkFiles } from './resolvePageChunkFiles'
+import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
 
 export const renderPage = async ({
   app,
@@ -27,8 +28,8 @@ export const renderPage = async ({
   vueRouter: VueRouter
   ssrTemplate: string
   output: RollupOutput['output']
-  outputEntryChunk: OutputChunk
-  outputCssAsset: OutputAsset
+  outputEntryChunk: OutputIpfsChunk
+  outputCssAsset: OutputIpfsAsset
 }): Promise<void> => {
   // switch to current page route
   await vueRouter.push(page.path)
