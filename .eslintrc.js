@@ -6,19 +6,28 @@ module.exports = {
     __VUEPRESS_DEV__: 'readonly',
     __VUEPRESS_SSR__: 'readonly',
     __VUE_HMR_RUNTIME__: 'readonly',
+    __VUE_OPTIONS_API__: 'readonly',
+    __VUE_PROD_DEVTOOLS__: 'readonly',
   },
   overrides: [
     {
       files: ['*.ts', '*.vue'],
       extends: 'vuepress-typescript',
       parserOptions: {
-        project: ['tsconfig.eslint.json'],
+        project: ['tsconfig.json'],
       },
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-var-requires': 'off',
+        'vue/component-tags-order': [
+          'error',
+          {
+            order: ['script', 'template', 'style'],
+          },
+        ],
+        'vue/multi-word-component-names': 'off',
       },
     },
     {

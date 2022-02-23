@@ -2,7 +2,7 @@
 
 <NpmBadge package="@vuepress/bundler-webpack" />
 
-Webpack bundler is provided by [@vuepress/bundler-webpack](https://www.npmjs.com/package/@vuepress/bundler-webpack) package. It is a dependency of the [vuepress](https://www.npmjs.com/package/vuepress) package, and you can also install it separately.
+Webpack bundler is provided by [@vuepress/bundler-webpack](https://www.npmjs.com/package/@vuepress/bundler-webpack) package. It is a dependency of the [vuepress-webpack](https://www.npmjs.com/package/vuepress-webpack) package, and you can also install it separately.
 
 ```bash
 npm i -D @vuepress/bundler-webpack@next
@@ -17,7 +17,7 @@ Reference of webpack bundler config, which can be set via [bundlerConfig](../con
 
 ```js
 module.exports = {
-  // when using vuepress package, you can omit this field
+  // when using vuepress-webpack package, you can omit this field
   // because webpack is the default bundler
   bundler: '@vuepress/bundler-webpack',
   // options for webpack bundler
@@ -52,12 +52,12 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 
 ### configureWebpack
 
-- Type: `(config: WebpackConfiguration, isServer: boolean, isBuild: boolean) => WebpackConfiguration`
+- Type: `(config: WebpackConfiguration, isServer: boolean, isBuild: boolean) => WebpackConfiguration | void`
 
 - Details:
 
   Edit the internal webpack config.
-  
+
   This option accepts a function that will receive a webpack config object as the 1st argument, an `isServer` flag as the 2nd argument and an `isBuild` flag as the 3rd argument. You can either mutate the config directly, or return an object to be merged by [webpack-merge](https://github.com/survivejs/webpack-merge).
 
 ### chainWebpack
@@ -70,31 +70,18 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 
   This option accepts a function that will receive a `Config` instance that provided by `webpack-chain` as the 1st argument an `isServer` flag as the 2nd argument and an `isBuild` flag as the 3rd argument.
 
-### beforeDevServer
+### devServerSetupMiddlewares
 
-- Type: `(server: WebpackDevServer) => void`
-
-- Details:
-
-  A hook to be called in `devServer.before` of webpack.
-
-  The arguments of the function are the first two arguments of `devServer.before`.
-
-- Also see:
-  - [Webpack > Configuration > DevServer > devServer.before](https://webpack.js.org/configuration/dev-server/#devserverbefore)
-
-### afterDevServer
-
-- Type: `(server: WebpackDevServer) => void`
+- Type: `(middlewares: Middleware[], devServer: Server) => Middleware[]`
 
 - Details:
 
-  A hook to be called in `devServer.after` of webpack.
+  A hook to be called in `devServer.setupMiddlewares` of webpack.
 
-  The arguments of the function are the first two arguments of `devServer.after`.
+  The arguments of the function are those of `devServer.setupMiddlewares`.
 
 - Also see:
-  - [Webpack > Configuration > DevServer > devServer.after](https://webpack.js.org/configuration/dev-server/#devserverafter)
+  - [Webpack > Configuration > DevServer > devServer.setupMiddlewares](https://webpack.js.org/configuration/dev-server/#devserversetupmiddlewares)
 
 ### vue
 

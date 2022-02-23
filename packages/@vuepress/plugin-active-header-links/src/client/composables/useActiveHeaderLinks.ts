@@ -106,7 +106,7 @@ export const useActiveHeaderLinks = ({
     }
   }
 
-  const onScroll = debounce(() => setActiveRouteHash(), delay)
+  const onScroll: () => Promise<void> = debounce(setActiveRouteHash, delay)
 
   onMounted(() => {
     onScroll()

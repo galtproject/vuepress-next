@@ -286,7 +286,7 @@ module.exports = {
 
   为了手动配置侧边栏元素，你可以将其设置为 _侧边栏数组_ ，其中的每个元素是一个 `SidebarItem` 对象或者一个字符串：
 
-  - `SidebarItem` 对象应该有一个 `text` 字段，有一个可选的 `link` 字段和一个可选的 `children` 字段。 `children` 字段同样是一个 _侧边栏数组_ 。
+  - `SidebarItem` 对象应该有一个 `text` 字段，有一个可选的 `link` 字段和一个可选的 `children` 字段。 `children` 字段同样是一个 _侧边栏数组_ 。当 `SidebarItem` 对象处于根节点时，它还有一个额外可选的 `collapsible` 字段来控制它是否可折叠。
   - 字符串应为目标页面文件的路径。它将会被转换为 `SidebarItem` 对象，将页面标题作为 `text` ，将页面路由路径作为 `link` ，并根据页面小标题自动生成 `children` 。
 
   如果你想在不同子路径中使用不同的侧边栏，你可以将该配置项设置为 _侧边栏对象_ ：
@@ -342,6 +342,30 @@ module.exports = {
         {
           text: 'Reference',
           children: ['/reference/cli.md', '/reference/config.md'],
+        },
+      ],
+    },
+  },
+}
+```
+
+- 示例 3：
+
+```js
+module.exports = {
+  themeConfig: {
+    // 可折叠的侧边栏
+    sidebar: {
+      '/reference/': [
+        {
+          text: 'VuePress Reference',
+          collapsible: true,
+          children: ['/reference/cli.md', '/reference/config.md'],
+        },
+        {
+          text: 'Bundlers Reference',
+          collapsible: true,
+          children: ['/reference/bundler/vite.md', '/reference/bundler/webpack.md'],
         },
       ],
     },
@@ -571,9 +595,12 @@ module.exports = {
 
 - 详情：
 
-  [OutboundLink](../components.md#outboundlink) 链接内的 `sr-only` 文字。
+  [ExternalLinkIcon](../plugin/external-link-icon.md#externallinkicon). 链接内的 `sr-only` 文字。
 
   它主要是为了站点的可访问性 (a11y) 。
+
+- 参考：
+  - [默认主题 > 配置 > themePlugins.externalLinkIcon](#themeplugins-externallinkicon)
 
 ### toggleDarkMode
 
@@ -648,6 +675,16 @@ module.exports = {
 
 - 参考：
   - [默认主题 > Markdown > 自定义容器](./markdown.md#自定义容器)
+
+### themePlugins.externalLinkIcon
+
+- 类型： `boolean`
+
+- 默认值： `true`
+
+- 详情：
+
+  是否启用 [@vuepress/plugin-external-link-icon](../plugin/external-link-icon.md) 。
 
 ### themePlugins.git
 

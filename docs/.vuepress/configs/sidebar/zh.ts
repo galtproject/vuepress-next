@@ -35,7 +35,7 @@ export const zh: SidebarConfig = {
         '/zh/advanced/cookbook/README.md',
         '/zh/advanced/cookbook/usage-of-client-app-enhance.md',
         '/zh/advanced/cookbook/adding-extra-pages.md',
-        '/zh/advanced/cookbook/extending-a-theme.md',
+        '/zh/advanced/cookbook/making-a-theme-extendable.md',
         '/zh/advanced/cookbook/passing-data-to-client-code.md',
         '/zh/advanced/cookbook/markdown-and-vue-sfc.md',
       ],
@@ -44,6 +44,7 @@ export const zh: SidebarConfig = {
   '/zh/reference/': [
     {
       text: 'VuePress 参考',
+      collapsible: true,
       children: [
         '/zh/reference/cli.md',
         '/zh/reference/config.md',
@@ -55,37 +56,36 @@ export const zh: SidebarConfig = {
         '/zh/reference/node-api.md',
       ],
     },
-  ],
-  '/zh/reference/bundler/': [
     {
       text: '打包工具参考',
+      collapsible: true,
       children: [
-        '/zh/reference/bundler/webpack.md',
         '/zh/reference/bundler/vite.md',
+        '/zh/reference/bundler/webpack.md',
       ],
     },
-  ],
-  '/zh/reference/default-theme/': [
     {
       text: '默认主题参考',
+      collapsible: true,
       children: [
         '/zh/reference/default-theme/config.md',
         '/zh/reference/default-theme/frontmatter.md',
         '/zh/reference/default-theme/components.md',
         '/zh/reference/default-theme/markdown.md',
         '/zh/reference/default-theme/styles.md',
+        '/zh/reference/default-theme/extending.md',
       ],
     },
-  ],
-  '/zh/reference/plugin/': [
     {
       text: '官方插件参考',
+      collapsible: true,
       children: [
         {
           text: '常用功能',
           children: [
             '/zh/reference/plugin/back-to-top.md',
             '/zh/reference/plugin/container.md',
+            '/zh/reference/plugin/external-link-icon.md',
             '/zh/reference/plugin/google-analytics.md',
             '/zh/reference/plugin/medium-zoom.md',
             '/zh/reference/plugin/nprogress.md',
@@ -117,7 +117,6 @@ export const zh: SidebarConfig = {
           text: '主题开发',
           children: [
             '/zh/reference/plugin/active-header-links.md',
-            '/zh/reference/plugin/debug.md',
             '/zh/reference/plugin/git.md',
             '/zh/reference/plugin/palette.md',
             '/zh/reference/plugin/theme-data.md',

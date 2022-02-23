@@ -2,7 +2,7 @@
 
 <NpmBadge package="@vuepress/core" />
 
-Node API 是由 [@vuepress/core](https://www.npmjs.com/package/@vuepress/clcorei) 包提供的。它是 [vuepress](https://www.npmjs.com/package/vuepress) 包的依赖之一，当然你也可以单独安装它：
+Node API 是由 [@vuepress/core](https://www.npmjs.com/package/@vuepress/core) 包提供的。它是 [vuepress](https://www.npmjs.com/package/vuepress) 包的依赖之一，当然你也可以单独安装它：
 
 ```bash
 npm i -D @vuepress/core@next
@@ -112,14 +112,6 @@ const dev = async () => {
 
 ## App 属性
 
-### version
-
-- 类型： `string`
-
-- 详情：
-
-  VuePress App 的版本，即 `@vuepress/core` 包的版本。
-
 ### options
 
 - 类型： `AppOptions`
@@ -129,6 +121,22 @@ const dev = async () => {
   VuePress App 的配置项。
 
   这些配置项来自于 [createBuildApp](#createbuildapp) / [createDevApp](#createdevapp) 的 `config` 参数，但所有可选的字段都填充上了默认值。
+
+### siteData
+
+- 类型： `SiteData`
+
+- 详情：
+
+  由用户设置的站点数据，包含所有的 [站点配置](./config.md#站点配置) ，可以在客户端代码中使用。
+
+### version
+
+- 类型： `string`
+
+- 详情：
+
+  VuePress App 的版本，即 `@vuepress/core` 包的版本。
 
 ### env.isBuild
 
@@ -154,14 +162,6 @@ const dev = async () => {
 
   用于判断 App 是否开启 Debug 模式的环境标记。
 
-### siteData
-
-- 类型： `SiteData`
-
-- 详情：
-
-  由用户设置的站点数据，包含所有的 [站点配置](./config.md#站点配置) ，可以在客户端代码中使用。
-
 ### markdown
 
 - 类型： `MarkdownIt`
@@ -169,6 +169,8 @@ const dev = async () => {
 - 详情：
 
   用于解析 Markdown 内容的 [markdown-it](https://github.com/markdown-it/markdown-it) 实例。
+
+  它仅在 [onInitialized](./plugin-api.md#oninitialized) 以及之后的 Hooks 中才可用。
 
 ### layouts
 
@@ -504,7 +506,7 @@ interface PageData {
 
 - 参考：
   - [客户端 API > usePageData](./client-api.md#usepagedata)
-  - [插件 API > extendsPageData](./plugin-api.md#extendspagedata)
+  - [插件 API > extendsPage](./plugin-api.md#extendspage)
 
 ### content
 
@@ -626,6 +628,25 @@ interface MarkdownLink {
 - 参考：
   - [Frontmatter > permalink](./frontmatter.md#permalink)
   - [Frontmatter > permalinkPattern](./frontmatter.md#permalinkpattern)
+
+
+### routeMeta
+
+- 类型： `Record<string, unknown>`
+
+- 详情：
+
+  附加到 vue-router 路由记录上的额外数据。
+
+- 参考：
+  - [Frontmatter > routeMeta](./frontmatter.md#routemeta)
+  - [vue-router > API 参考 > RouteRecordRaw > meta](https://next.router.vuejs.org/zh/api/#meta)
+
+::: tip Route Meta 和 Page Data 的区别是什么？
+[Route Meta](#routemeta) 和 [Page Data](#data) 都可以在客户端代码中使用。然而， Route Meta 是附加在路由记录上的，因此当用户进入你的站点时，所有页面的 Route Meta 都会立即被加载。相比之下， Page Data 是存储在单独的文件中的，只有在用户进入对应页面时才会被加载。
+
+因此，不建议在 Route Meta 中存储大量的信息，否则在站点有很多页面时，将会影响站点的初始加载速度。
+:::
 
 ### slug
 

@@ -1,32 +1,5 @@
-<template>
-  <footer class="page-meta">
-    <div v-if="editNavLink" class="meta-item edit-link">
-      <NavLink class="meta-item-label" :item="editNavLink" />
-    </div>
-
-    <div v-if="lastUpdated" class="meta-item last-updated">
-      <span class="meta-item-label">{{ themeLocale.lastUpdatedText }}: </span>
-      <span class="meta-item-info">{{ lastUpdated }}</span>
-    </div>
-
-    <div
-      v-if="contributors && contributors.length"
-      class="meta-item contributors"
-    >
-      <span class="meta-item-label">{{ themeLocale.contributorsText }}: </span>
-      <span class="meta-item-info">
-        <template v-for="(contributor, index) in contributors" :key="index">
-          <span class="contributor" :title="`email: ${contributor.email}`">
-            {{ contributor.name }}
-          </span>
-          <template v-if="index !== contributors.length - 1">, </template>
-        </template>
-      </span>
-    </div>
-  </footer>
-</template>
-
 <script setup lang="ts">
+import AutoLink from '@theme/AutoLink.vue'
 import {
   usePageData,
   usePageFrontmatter,
@@ -37,13 +10,12 @@ import type { ComputedRef } from 'vue'
 import type {
   DefaultThemeNormalPageFrontmatter,
   DefaultThemePageData,
-  NavLink as NavLinkType,
+  NavLink,
 } from '../../shared'
 import { useThemeLocaleData } from '../composables'
 import { resolveEditLink } from '../utils'
-import NavLink from './NavLink.vue'
 
-const useEditNavLink = (): ComputedRef<null | NavLinkType> => {
+const useEditNavLink = (): ComputedRef<null | NavLink> => {
   const themeLocale = useThemeLocaleData()
   const page = usePageData<DefaultThemePageData>()
   const frontmatter = usePageFrontmatter<DefaultThemeNormalPageFrontmatter>()
@@ -84,7 +56,6 @@ const useEditNavLink = (): ComputedRef<null | NavLinkType> => {
 }
 
 const useLastUpdated = (): ComputedRef<null | string> => {
-  const siteLocale = useSiteLocaleData()
   const themeLocale = useThemeLocaleData()
   const page = usePageData<DefaultThemePageData>()
   const frontmatter = usePageFrontmatter<DefaultThemeNormalPageFrontmatter>()
@@ -99,7 +70,7 @@ const useLastUpdated = (): ComputedRef<null | string> => {
 
     const updatedDate = new Date(page.value.git?.updatedTime)
 
-    return updatedDate.toLocaleString(siteLocale.value.lang)
+    return updatedDate.toLocaleString()
   })
 }
 
@@ -125,3 +96,33 @@ const editNavLink = useEditNavLink()
 const lastUpdated = useLastUpdated()
 const contributors = useContributors()
 </script>
+
+<template>
+  <footer class="page-meta">
+    <div v-if="editNavLink" class="meta-item edit-link">
+      <AutoLink class="meta-item-label" :item="editNavLink" />
+    </div>
+
+    <div v-if="lastUpdated" class="meta-item last-updated">
+      <span class="meta-item-label">{{ themeLocale.lastUpdatedText }}: </span>
+      <ClientOnly>
+        <span class="meta-item-info">{{ lastUpdated }}</span>
+      </ClientOnly>
+    </div>
+
+    <div
+      v-if="contributors && contributors.length"
+      class="meta-item contributors"
+    >
+      <span class="meta-item-label">{{ themeLocale.contributorsText }}: </span>
+      <span class="meta-item-info">
+        <template v-for="(contributor, index) in contributors" :key="index">
+          <span class="contributor" :title="`email: ${contributor.email}`">
+            {{ contributor.name }}
+          </span>
+          <template v-if="index !== contributors.length - 1">, </template>
+        </template>
+      </span>
+    </div>
+  </footer>
+</template>

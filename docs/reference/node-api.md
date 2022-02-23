@@ -112,14 +112,6 @@ const dev = async () => {
 
 ## App Properties
 
-### version
-
-- Type: `string`
-
-- Details:
-
-  Version of VuePress app, i.e. version of `@vuepress/core` package.
-
 ### options
 
 - Type: `AppOptions`
@@ -129,6 +121,22 @@ const dev = async () => {
   Options of VuePress app.
 
   The options come from the `config` argument in [createBuildApp](#createbuildapp) / [createDevApp](#createdevapp), while all optional fields will be filled with a default value.
+
+### siteData
+
+- Type: `SiteData`
+
+- Details:
+
+  Site data that set by user, including all the [site config](./config.md#site-config), which will be used in client side.
+
+### version
+
+- Type: `string`
+
+- Details:
+
+  Version of VuePress app, i.e. version of `@vuepress/core` package.
 
 ### env.isBuild
 
@@ -154,14 +162,6 @@ const dev = async () => {
 
   Environment flag used to identify whether the debug mode is enabled.
 
-### siteData
-
-- Type: `SiteData`
-
-- Details:
-
-  Site data that set by user, including all the [site config](./config.md#site-config), which will be used in client side.
-
 ### markdown
 
 - Type: `MarkdownIt`
@@ -169,6 +169,8 @@ const dev = async () => {
 - Details:
 
   The [markdown-it](https://github.com/markdown-it/markdown-it) instance used for parsing markdown content.
+
+  It is only available in and after [onInitialized](./plugin-api.md#oninitialized) hook.
 
 ### layouts
 
@@ -506,7 +508,7 @@ interface PageData {
 
 - Also see:
   - [Client API > usePageData](./client-api.md#usepagedata)
-  - [Plugin API > extendsPageData](./plugin-api.md#extendspagedata)
+  - [Plugin API > extendsPage](./plugin-api.md#extendspage)
 
 ### content
 
@@ -628,6 +630,24 @@ interface MarkdownLink {
 - Also see:
   - [Frontmatter > permalink](./frontmatter.md#permalink)
   - [Frontmatter > permalinkPattern](./frontmatter.md#permalinkpattern)
+
+### routeMeta
+
+- Type: `Record<string, unknown>`
+
+- Details:
+
+  Custom data to be attached to the route record of vue-router.
+
+- Also see:
+  - [Frontmatter > routeMeta](./frontmatter.md#routemeta)
+  - [vue-router > API Reference > RouteRecordRaw > meta](https://next.router.vuejs.org/api/#meta)
+
+::: tip What's the difference between route meta and page data?
+Both [route meta](#routemeta) and [page data](#data) is available in client side. However, route meta is attached to the route record, so the route meta of all pages would be loaded at once when users enter your site. In the contrast, page data is saved in separated files, which would be loaded only when users enter the corresponding page.
+
+Therefore, it's not recommended to store large amounts of info into route meta, otherwise the initial loading speed will be affected a lot when your site has a large number of pages.
+:::
 
 ### slug
 

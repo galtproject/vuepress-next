@@ -35,7 +35,7 @@ export const en: SidebarConfig = {
         '/advanced/cookbook/README.md',
         '/advanced/cookbook/usage-of-client-app-enhance.md',
         '/advanced/cookbook/adding-extra-pages.md',
-        '/advanced/cookbook/extending-a-theme.md',
+        '/advanced/cookbook/making-a-theme-extendable.md',
         '/advanced/cookbook/passing-data-to-client-code.md',
         '/advanced/cookbook/markdown-and-vue-sfc.md',
       ],
@@ -44,6 +44,7 @@ export const en: SidebarConfig = {
   '/reference/': [
     {
       text: 'VuePress Reference',
+      collapsible: true,
       children: [
         '/reference/cli.md',
         '/reference/config.md',
@@ -55,34 +56,33 @@ export const en: SidebarConfig = {
         '/reference/node-api.md',
       ],
     },
-  ],
-  '/reference/bundler/': [
     {
       text: 'Bundlers Reference',
-      children: ['/reference/bundler/webpack.md', '/reference/bundler/vite.md'],
+      collapsible: true,
+      children: ['/reference/bundler/vite.md', '/reference/bundler/webpack.md'],
     },
-  ],
-  '/reference/default-theme/': [
     {
       text: 'Default Theme Reference',
+      collapsible: true,
       children: [
         '/reference/default-theme/config.md',
         '/reference/default-theme/frontmatter.md',
         '/reference/default-theme/components.md',
         '/reference/default-theme/markdown.md',
         '/reference/default-theme/styles.md',
+        '/reference/default-theme/extending.md',
       ],
     },
-  ],
-  '/reference/plugin/': [
     {
       text: 'Official Plugins Reference',
+      collapsible: true,
       children: [
         {
           text: 'Common Features',
           children: [
             '/reference/plugin/back-to-top.md',
             '/reference/plugin/container.md',
+            '/reference/plugin/external-link-icon.md',
             '/reference/plugin/google-analytics.md',
             '/reference/plugin/medium-zoom.md',
             '/reference/plugin/nprogress.md',
@@ -114,7 +114,6 @@ export const en: SidebarConfig = {
           text: 'Theme Development',
           children: [
             '/reference/plugin/active-header-links.md',
-            '/reference/plugin/debug.md',
             '/reference/plugin/git.md',
             '/reference/plugin/palette.md',
             '/reference/plugin/theme-data.md',

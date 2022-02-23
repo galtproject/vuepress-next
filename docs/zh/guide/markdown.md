@@ -68,7 +68,7 @@ VuePress 会使用 [markdown-it](https://github.com/markdown-it/markdown-it) 来
   <RouterLink to="/zh/guide/getting-started.html">快速上手</RouterLink>
   <RouterLink to="/zh/guide/">指南</RouterLink>
   <RouterLink to="/zh/reference/config.html#links">配置参考 &gt; markdown.links</RouterLink>
-  <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub<OutboundLink/></a>
+  <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
 </template>
 ```
 
@@ -85,7 +85,7 @@ VuePress 会使用 [markdown-it](https://github.com/markdown-it/markdown-it) 来
 
 - 内部链接会被转换为 `<RouterLink>` 以便进行 SPA 导航。
 - 指向 `.md` 文件的内部链接会被转换为目标页面的 [路由路径](./page.md#路由)，并且支持绝对路径和相对路径。
-- 外部链接会被添加 `target="_blank" rel="noopener noreferrer"` 属性和一个 <OutboundLink /> 标记。
+- 外部链接会被添加 `target="_blank" rel="noopener noreferrer"` 属性。
 
 **建议**
 
@@ -99,8 +99,6 @@ VuePress 会使用 [markdown-it](https://github.com/markdown-it/markdown-it) 来
 链接扩展是由我们的内置插件支持的。
 
 配置参考： [markdown.links](../reference/config.md#markdown-links)
-
-参考: [內置组件 > OutboundLink](../reference/components.md#outboundlink)
 :::
 
 ### Emoji :tada:
@@ -418,13 +416,14 @@ module.exports = {
 
 ## 注意事项
 
-### 已废弃的 HTML 标签
+### 非标准的 HTML 标签
 
-已废弃的 HTML 标签默认不允许在 VuePress 的 Markdown 中使用，比如 [\<center>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/center) 和 [\<font>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font) 等。
+非标准的 HTML 标签不会被 Vue 模板编译器识别成原生 HTML 标签。相反，Vue 会尝试将这些标签解析为 Vue 组件，而显然这些组件通常是不存在的。 例如：
 
-这些标签不会被 Vue 模板编译器识别成原生 HTML 标签。相反，Vue 会尝试将这些标签解析为 Vue 组件，而显然这些组件通常是不存在的。
+- 已废弃的 HTML 标签，比如 [\<center>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/center) 和 [\<font>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font) 等。
+- [MathML 标签](https://developer.mozilla.org/zh-CN/docs/Web/MathML)，它们可能会被一些 markdown-it 的 LaTeX 插件用到。
 
-你应该尽量避免使用已废弃的 HTML 标签。不过，如果你无论如何都要使用这些标签的话，可以尝试下面两种方法之一：
+如果你无论如何都要使用这些标签的话，可以尝试下面两种方法之一：
 
 - 添加一个 [v-pre](https://v3.cn.vuejs.org/api/directives.html#v-pre) 指令来跳过这个元素和它的子元素的编译过程。注意所有的模板语法也都会失效。
 - 设置 [compilerOptions.isCustomElement](https://v3.vuejs.org/api/application-config.html#compileroptions) 来告诉 Vue 模板编译器不要尝试作为组件来解析它们。

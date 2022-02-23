@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.35](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2022-01-22)
+
+**Note:** Version bump only for package @vuepress/markdown
+
+
+
+
+
+# [2.0.0-beta.33](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2022-01-12)
+
+
+### Bug Fixes
+
+* **markdown:** replace img src correctly when wrapped with other html tags (close [#597](https://github.com/vuepress/vuepress-next/issues/597)) ([f2f53ef](https://github.com/vuepress/vuepress-next/commit/f2f53efc21a1c16c342f32d15562b7153e48ce70))
+
+
+
+
+
+# [2.0.0-beta.32](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2021-12-28)
+
+**Note:** Version bump only for package @vuepress/markdown
+
+
+
+
+
+# [2.0.0-beta.29](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2021-12-18)
+
+
+### Features
+
+* extract external link icon to plugin ([437b750](https://github.com/vuepress/vuepress-next/commit/437b75076667e653d3600c96f9f4a7c3c3e47e57))
+
+
+### BREAKING CHANGES
+
+* config `markdown.links.externalIcon` is removed, use plugin-external-link-icon instead
+* frontmatter `externalIcon` is removed, use `externalLinkIcon` from plugin-external-link-icon
+* component `OutboundLink` is removed, use `ExternalLinkIcon` from plugin-external-link-icon
+
+
+
+
+
+# [2.0.0-beta.28](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2021-12-17)
+
+**Note:** Version bump only for package @vuepress/markdown
+
+
+
+
+
 # [2.0.0-beta.27](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2021-10-28)
 
 **Note:** Version bump only for package @vuepress/markdown
