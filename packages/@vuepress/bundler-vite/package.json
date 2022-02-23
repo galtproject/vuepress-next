@@ -20,6 +20,7 @@
   "author": "Evan You",
   "main": "index.js",
   "types": "index.d.ts",
+  "node" : ">=16.0.0",
   "scripts": {
     "build": "yarn && tsc -b tsconfig.build.json",
     "build-and-publish": "npm run build && cp package.json lib/ && npm publish ./lib --access public"
