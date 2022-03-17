@@ -9,7 +9,6 @@ import { renderPagePrefetchLinks } from './renderPagePrefetchLinks'
 import { renderPagePreloadLinks } from './renderPagePreloadLinks'
 import { renderPageScripts } from './renderPageScripts'
 import { renderPageStyles } from './renderPageStyles'
-import { resolvePageChunkFiles } from './resolvePageChunkFiles'
 import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
 
 export const renderPage = async ({

@@ -24,7 +24,7 @@ export const renderPagePreloadLinks = ({
   // dedupe entry chunks and page chunks
   const preloadFiles = Array.from(
     new Set([
-      outputEntryChunk.fileName,
+      outputEntryChunk.fileName, //TODO: fix
       ...outputEntryChunk.imports,
       // TODO: preload layout
       ...pageChunkFiles,
@@ -51,10 +51,10 @@ export const renderPagePreloadLinks = ({
       }
 
       if (type === 'script') {
-        return `<link rel="modulepreload" href="${app.options.base}${item}">`
+        return `<link rel="modulepreload" href="${item.startsWith('http') ? '' : app.options.base}${item}">`
       }
 
-      return `<link rel="preload" href="${app.options.base}${item}"${
+      return `<link rel="preload" href="${item.startsWith('http') ? '' : app.options.base}${item}"${
         type !== '' ? ` as="${type}"` : ''
       }>`
     })

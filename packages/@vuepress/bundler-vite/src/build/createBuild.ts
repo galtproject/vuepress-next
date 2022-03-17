@@ -43,22 +43,9 @@ export const createBuild =
     ) as OutputIpfsAsset;
 
     const { bundlerConfig } = app.options;
-    console.log('clientOutput.output', clientOutput.output);
     if (bundlerConfig && bundlerConfig.storeAsset) {
-      console.log('bundlerConfig.storeAsset');
       clientCssAsset.ipfsHash = await bundlerConfig.storeAsset(clientCssAsset.source);
-      console.log('clientCssAsset.ipfsHash', clientCssAsset.ipfsHash);
       clientEntryChunk.ipfsHash = await bundlerConfig.storeAsset(clientEntryChunk.code);
-      console.log('clientEntryChunk.ipfsHash', clientEntryChunk.ipfsHash);
-
-      // for (let i = 0; i < clientOutput.output.length; i++) {
-      //   const item = clientOutput.output[i];
-      //   if (item.type === 'chunk') {
-      //     if (item.source || item.code) {
-      //       item.ipfsHash = await bundlerConfig.storeAsset(item.source || item.code);
-      //     }
-      //   }
-      // }
     }
 
     // render pages
@@ -83,15 +70,25 @@ export const createBuild =
 
       // create vue ssr app
       const { app: vueApp, router: vueRouter } = await createVueApp()
-      console.log('app.dir.dest(\'.server\')', app.dir.dest('.client'));
-      console.log('fs.existsSync', fs.existsSync(app.dir.dest('.client/assets')));
+      console.log('app.dir.dest(\'.server\')', app.dir.dest('assets'));
+      console.log('fs.existsSync', fs.existsSync(app.dir.dest('assets')));
 
+      const storedAssets = {};
       // pre-render pages to html files
       const spinner = ora()
       for (const page of app.pages) {
         // resolve page chunks
         const pageChunkFiles = resolvePageChunkFiles({ page, output: clientOutput.output });
-        console.log('pageChunkFiles', pageChunkFiles);
+        if (bundlerConfig && bundlerConfig.storeAsset) {
+          const {baseStorageUri: base} = bundlerConfig;
+          for (let i = 0; i < pageChunkFiles.length; i++) {
+            const fileName = pageChunkFiles[i];
+            if (!storedAssets[fileName]) {
+              storedAssets[fileName] = await bundlerConfig.storeAsset(fs.readFileSync(app.dir.dest(fileName)));
+            }
+            pageChunkFiles[i] = base + storedAssets[fileName] + (fileName.endsWith('.js') ? '#.js' : '#.css');
+          }
+        }
 
         spinner.start(`Rendering pages ${chalk.magenta(page.path)}`)
         await renderPage({
