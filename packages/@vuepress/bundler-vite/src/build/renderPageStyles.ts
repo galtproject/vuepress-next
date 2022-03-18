@@ -11,10 +11,5 @@ export const renderPageStyles = async ({
   app: App
   outputCssAsset: OutputIpfsAsset
 }): Promise<string> => {
-  const {baseStorageUri} = app.options.bundlerConfig || {};
-  if (outputCssAsset.ipfsHash) {
-    return `<link rel="stylesheet" href="${baseStorageUri}${outputCssAsset.ipfsHash}">`;
-  } else {
-    return `<link rel="stylesheet" href="${app.options.base}${outputCssAsset.fileName}">`;
-  }
+  return `<link rel="stylesheet" href="${outputCssAsset.fileName.startsWith('http') ? '' : app.options.base}${outputCssAsset.fileName}">`;
 }

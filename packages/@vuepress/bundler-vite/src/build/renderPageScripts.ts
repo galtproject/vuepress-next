@@ -11,10 +11,5 @@ export const renderPageScripts = async ({
   app: App
   outputEntryChunk: OutputIpfsChunk
 }): Promise<string> => {
-  const {baseStorageUri} = app.options.bundlerConfig || {};
-  if (outputEntryChunk.ipfsHash) {
-    return `<link rel="stylesheet" href="${baseStorageUri}${outputEntryChunk.ipfsHash}">`;
-  } else {
-    return `<script type="module" src="${app.options.base}${outputEntryChunk.fileName}" defer></script>`;
-  }
+  return `<script type="module" src="${outputEntryChunk.fileName.startsWith('http') ? '' : app.options.base}${outputEntryChunk.fileName}" defer></script>`;
 }

@@ -7,7 +7,6 @@ import type { ViteBundlerOptions } from '../types'
 import { renderPage } from './renderPage'
 import { resolveViteConfig } from './resolveViteConfig'
 import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
-import {resolvePageChunkFiles} from "./resolvePageChunkFiles";
 
 export const createBuild =
   (options: ViteBundlerOptions): Bundler['build'] =>
@@ -42,10 +41,27 @@ export const createBuild =
       (item) => item.type === 'asset' && item.fileName.endsWith('.css')
     ) as OutputIpfsAsset;
 
+
     const { bundlerConfig } = app.options;
-    if (bundlerConfig && bundlerConfig.storeAsset) {
-      clientCssAsset.ipfsHash = await bundlerConfig.storeAsset(clientCssAsset.source);
-      clientEntryChunk.ipfsHash = await bundlerConfig.storeAsset(clientEntryChunk.code);
+    if (bundlerConfig && bundlerConfig.storeFolder) {
+      const {baseStorageUri} = bundlerConfig;
+      const assetsDirIpfsHash = await bundlerConfig.storeFolder(app.dir.dest('assets'));
+      for (let i = 0; i < clientOutput.output.length; i++) {
+        for (let i = 0; i < clientOutput.output.length; i++) {
+          clientOutput.output[i].fileName = replaceAssetsWithIpfs(clientOutput.output[i].fileName);
+          console.log('clientOutput.output[i].fileName', clientOutput.output[i].fileName);
+          if ((clientOutput.output[i] as any).imports) {
+            (clientOutput.output[i] as any).imports = (clientOutput.output[i] as any).imports.map(i => replaceAssetsWithIpfs(i));
+          }
+          if ((clientOutput.output[i] as any).dynamicImports) {
+            (clientOutput.output[i] as any).dynamicImports = (clientOutput.output[i] as any).dynamicImports.map(i => replaceAssetsWithIpfs(i));
+          }
+        }
+      }
+
+      function replaceAssetsWithIpfs(name) {
+        return name.replace('assets/', baseStorageUri + assetsDirIpfsHash + '/');
+      }
     }
 
     // render pages
@@ -70,26 +86,10 @@ export const createBuild =
 
       // create vue ssr app
       const { app: vueApp, router: vueRouter } = await createVueApp()
-      console.log('app.dir.dest(\'.server\')', app.dir.dest('assets'));
-      console.log('fs.existsSync', fs.existsSync(app.dir.dest('assets')));
 
-      const storedAssets = {};
       // pre-render pages to html files
       const spinner = ora()
       for (const page of app.pages) {
-        // resolve page chunks
-        const pageChunkFiles = resolvePageChunkFiles({ page, output: clientOutput.output });
-        if (bundlerConfig && bundlerConfig.storeAsset) {
-          const {baseStorageUri: base} = bundlerConfig;
-          for (let i = 0; i < pageChunkFiles.length; i++) {
-            const fileName = pageChunkFiles[i];
-            if (!storedAssets[fileName]) {
-              storedAssets[fileName] = await bundlerConfig.storeAsset(fs.readFileSync(app.dir.dest(fileName)));
-            }
-            pageChunkFiles[i] = base + storedAssets[fileName] + (fileName.endsWith('.js') ? '#.js' : '#.css');
-          }
-        }
-
         spinner.start(`Rendering pages ${chalk.magenta(page.path)}`)
         await renderPage({
           app,
@@ -100,7 +100,6 @@ export const createBuild =
           output: clientOutput.output,
           outputEntryChunk: clientEntryChunk,
           outputCssAsset: clientCssAsset,
-          pageChunkFiles,
         })
       }
       spinner.stop()

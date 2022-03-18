@@ -10,6 +10,7 @@ import { renderPagePreloadLinks } from './renderPagePreloadLinks'
 import { renderPageScripts } from './renderPageScripts'
 import { renderPageStyles } from './renderPageStyles'
 import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
+import {resolvePageChunkFiles} from "./resolvePageChunkFiles";
 
 export const renderPage = async ({
   app,
@@ -20,7 +21,6 @@ export const renderPage = async ({
   output,
   outputEntryChunk,
   outputCssAsset,
-  pageChunkFiles,
 }: {
   app: App
   page: Page
@@ -29,8 +29,7 @@ export const renderPage = async ({
   ssrTemplate: string
   output: RollupOutput['output']
   outputEntryChunk: OutputIpfsChunk
-  outputCssAsset: OutputIpfsAsset,
-  pageChunkFiles: string[]
+  outputCssAsset: OutputIpfsAsset
 }): Promise<void> => {
   // switch to current page route
   await vueRouter.push(page.path)
@@ -44,6 +43,9 @@ export const renderPage = async ({
 
   // render current page to string
   const pageRendered = await renderToString(vueApp, ssrContext);
+
+  // resolve page chunks
+  const pageChunkFiles = resolvePageChunkFiles({ page, output });
 
   // generate html string
   const html = ssrTemplate
