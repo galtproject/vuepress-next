@@ -49,7 +49,6 @@ export const createBuild =
       for (let i = 0; i < clientOutput.output.length; i++) {
         for (let i = 0; i < clientOutput.output.length; i++) {
           clientOutput.output[i].fileName = replaceAssetsWithIpfs(clientOutput.output[i].fileName);
-          console.log('clientOutput.output[i].fileName', clientOutput.output[i].fileName);
           if ((clientOutput.output[i] as any).imports) {
             (clientOutput.output[i] as any).imports = (clientOutput.output[i] as any).imports.map(i => replaceAssetsWithIpfs(i));
           }
@@ -67,7 +66,6 @@ export const createBuild =
     // render pages
     await withSpinner('Rendering pages')(async () => {
       // load ssr template file
-      console.log('app.options', app.options);
       const ssrTemplate = (
         await fs.readFile(app.options.templateBuild)
       ).toString()
