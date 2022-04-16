@@ -75,12 +75,9 @@ export const createBuild =
       ) as OutputChunk
 
       // load the compiled server bundle
-      const { createVueApp } = require(app.dir.dest(
-        '.server',
-        serverEntryChunk.fileName
-      )) as {
-        createVueApp: CreateVueAppFunction
-      }
+      const serverEntryPath = app.dir.dest('.server', serverEntryChunk.fileName);
+      delete require.cache[serverEntryPath];
+      const { createVueApp } = require(serverEntryPath) as { createVueApp: CreateVueAppFunction };
 
       // create vue ssr app
       const { app: vueApp, router: vueRouter } = await createVueApp()
