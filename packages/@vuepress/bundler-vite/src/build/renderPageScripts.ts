@@ -1,14 +1,15 @@
 import type { App } from '@vuepress/core'
-import type { OutputChunk } from 'rollup'
+import {OutputIpfsChunk} from "./interface";
 
 /**
  * Render scripts of current page
  */
-export const renderPageScripts = ({
+export const renderPageScripts = async ({
   app,
   outputEntryChunk,
 }: {
   app: App
-  outputEntryChunk: OutputChunk
-}): string =>
-  `<script type="module" src="${app.options.base}${outputEntryChunk.fileName}" defer></script>`
+  outputEntryChunk: OutputIpfsChunk
+}): Promise<string> => {
+  return `<script type="module" src="${outputEntryChunk.fileName.startsWith('http') ? '' : app.options.base}${outputEntryChunk.fileName}" defer></script>`;
+}

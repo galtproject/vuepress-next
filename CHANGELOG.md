@@ -3,6 +3,197 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-beta.35](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.34...v2.0.0-beta.35) (2022-01-22)
+
+
+### Bug Fixes
+
+* **cli:** watch user config correctly on win32 (close [#611](https://github.com/vuepress/vuepress-next/issues/611)) ([055b174](https://github.com/vuepress/vuepress-next/commit/055b174d5eb30aae76fe409b948da2be5a7fbe58))
+
+
+### Features
+
+* **client:** allow customizing global computed resolvers (close [#338](https://github.com/vuepress/vuepress-next/issues/338)) ([405fc8d](https://github.com/vuepress/vuepress-next/commit/405fc8d7aa579d04b43bf21f926176da761ea2e6))
+
+
+
+
+
+# [2.0.0-beta.34](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.33...v2.0.0-beta.34) (2022-01-21)
+
+
+### Bug Fixes
+
+* **theme-default:** add missing color transitions ([0955c9f](https://github.com/vuepress/vuepress-next/commit/0955c9f48a4811d681f8b20620a1c5134dcb3c14))
+* **theme-default:** highlight sidebar heading when used as a link (close [#628](https://github.com/vuepress/vuepress-next/issues/628)) ([1a5f4fb](https://github.com/vuepress/vuepress-next/commit/1a5f4fb7bf66671a2b0acbaf5bca47a00a48daaa))
+
+
+### Code Refactoring
+
+* remove debug plugin ([f8481eb](https://github.com/vuepress/vuepress-next/commit/f8481eb06b001c81e54cd6fab7d12f1ab75cdbc7))
+
+
+### Features
+
+* **client:** add vue-devtools support ([a19d945](https://github.com/vuepress/vuepress-next/commit/a19d945445a4b50455553c1221eaeefda6e73211))
+* **plugin-docsearch:** bump docsearch version to support translations ([47a0ef1](https://github.com/vuepress/vuepress-next/commit/47a0ef149c7acdd8317f83c2a374b80dd39761ef))
+* **plugin-external-link-icon:** add locales option ([#636](https://github.com/vuepress/vuepress-next/issues/636)) ([c7f0c43](https://github.com/vuepress/vuepress-next/commit/c7f0c43366405ef1a8e6b69aadfb35c9c9361452))
+* **plugin-theme-data:** add devtools support ([dab437c](https://github.com/vuepress/vuepress-next/commit/dab437cc7f331fb8da619485a47d2529cb4ce91a))
+* **theme-default:** improve sidebar a11y (close [#604](https://github.com/vuepress/vuepress-next/issues/604)) ([8033b82](https://github.com/vuepress/vuepress-next/commit/8033b826123e8d57f00cbd393a10b8a268239fe0))
+
+
+### BREAKING CHANGES
+
+* `@vuepress/plugin-debug` package has been removed
+
+
+
+
+
+# [2.0.0-beta.33](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.32...v2.0.0-beta.33) (2022-01-12)
+
+
+### Bug Fixes
+
+* **core:** should process page hooks inside createPage ([e1cbab5](https://github.com/vuepress/vuepress-next/commit/e1cbab50bf79f8278fdc4d9a63c21762443a3183))
+* **markdown:** replace img src correctly when wrapped with other html tags (close [#597](https://github.com/vuepress/vuepress-next/issues/597)) ([f2f53ef](https://github.com/vuepress/vuepress-next/commit/f2f53efc21a1c16c342f32d15562b7153e48ce70))
+* **theme-default:** bump vueuse to avoid localstorage error (close [#589](https://github.com/vuepress/vuepress-next/issues/589)) ([#612](https://github.com/vuepress/vuepress-next/issues/612)) ([7558681](https://github.com/vuepress/vuepress-next/commit/755868194a05ae8d1d70fbd14c0230e8080f7db1))
+
+
+### Features
+
+* **core:** allow theme to set default HTML templates ([4fb7b55](https://github.com/vuepress/vuepress-next/commit/4fb7b55741bd9a89769c758e71bc341d44d84d3e))
+* **plugin-shiki:** bump shiki to 0.10.0 ([9d42e56](https://github.com/vuepress/vuepress-next/commit/9d42e56c7ea4b74046ef1b41a39fc4862c39e6f3))
+* **theme-default:** imporve dark mode experience (close [#387](https://github.com/vuepress/vuepress-next/issues/387)) ([c20a1ba](https://github.com/vuepress/vuepress-next/commit/c20a1baa97f4fbbc6a907fb8ca0f76a3cc0310c1))
+* **theme-default:** make all non-global components replaceable ([f480bb2](https://github.com/vuepress/vuepress-next/commit/f480bb25943fe1a81e2ceda8f1b53afbb11b254c))
+
+
+
+
+
+# [2.0.0-beta.32](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.31...v2.0.0-beta.32) (2021-12-28)
+
+
+### Bug Fixes
+
+* **theme-default:** avoid transition on fragment child (close [#592](https://github.com/vuepress/vuepress-next/issues/592)) ([10e5cc0](https://github.com/vuepress/vuepress-next/commit/10e5cc06b96f9dc2fc8ba2c8bdc83f7177e213bc))
+
+
+### Code Refactoring
+
+* **core:** normalize core app structure ([6952acf](https://github.com/vuepress/vuepress-next/commit/6952acfeee4575e53ce468c3d180dc9f623d6cd1))
+
+
+### Features
+
+* **shared:** improve types of site base ([66943fb](https://github.com/vuepress/vuepress-next/commit/66943fb185acbc90efbc3c1509a02c9c22963393))
+
+
+### BREAKING CHANGES
+
+* **core:** config `templateSSR` is renamed to `templateBuild`
+
+
+
+
+
+# [2.0.0-beta.31](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.30...v2.0.0-beta.31) (2021-12-24)
+
+
+### Bug Fixes
+
+* **theme-default:** code line numbers unaligned in different display scale (close [#499](https://github.com/vuepress/vuepress-next/issues/499)) ([21accb5](https://github.com/vuepress/vuepress-next/commit/21accb5773224363a548915a6f3a7a23a5bcfa0d))
+* **theme-default:** remove focus-visible outline (close [#359](https://github.com/vuepress/vuepress-next/issues/359)) ([cfbaa14](https://github.com/vuepress/vuepress-next/commit/cfbaa14270df0584594f56abc5a9ac0c8a6b945a))
+
+
+### Features
+
+* **theme-default:** support collapsible sidebar (close [#397](https://github.com/vuepress/vuepress-next/issues/397)) ([c7fd815](https://github.com/vuepress/vuepress-next/commit/c7fd81580a9061b22f1a60a735fdc9a527ef1bfd))
+
+
+
+
+
+# [2.0.0-beta.30](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.29...v2.0.0-beta.30) (2021-12-23)
+
+
+### Bug Fixes
+
+* **plugin-back-to-top:** fix regression when upgrading ts-debounce (close [#579](https://github.com/vuepress/vuepress-next/issues/579)) ([7a6a45b](https://github.com/vuepress/vuepress-next/commit/7a6a45be5aec933c0bfd983a1e9d35ee1231761d))
+* **theme-default:** arrows not displaying in page nav ([#573](https://github.com/vuepress/vuepress-next/issues/573)) ([2d5b084](https://github.com/vuepress/vuepress-next/commit/2d5b08400316a1734ddc6451f390ebcd9db3faa3))
+* **theme-default:** do not always wrap logo and hero image with client-only ([6b4ee45](https://github.com/vuepress/vuepress-next/commit/6b4ee45fdba81705af02ed6a55d9c1314ddf360a))
+
+
+### Features
+
+* **bundler-webpack:** add devServerSetupMiddlewares option ([4a042a4](https://github.com/vuepress/vuepress-next/commit/4a042a4abc96fc208b6da658782ad3e99fd7af7b))
+
+
+### BREAKING CHANGES
+
+* **bundler-webpack:** `beforeDevServer` and `afterDevServer` options are removed, use `devServerSetupMiddlewares` instead
+
+
+
+
+
+# [2.0.0-beta.29](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.28...v2.0.0-beta.29) (2021-12-18)
+
+
+### Bug Fixes
+
+* **core:** set default bundler option to vite ([3fd11f5](https://github.com/vuepress/vuepress-next/commit/3fd11f5321e5efbc2a6fdbf28a3b01834e9153b0))
+* **core:** use theme after its plugins ([fc5bd91](https://github.com/vuepress/vuepress-next/commit/fc5bd91bb7dfb9f20bd9e916886a00518ae1989f))
+
+
+### Features
+
+* extract external link icon to plugin ([437b750](https://github.com/vuepress/vuepress-next/commit/437b75076667e653d3600c96f9f4a7c3c3e47e57))
+* **theme-default:** export default locale options ([e3ac623](https://github.com/vuepress/vuepress-next/commit/e3ac6230faa75f1557d07753f04670ef29767442))
+
+
+### BREAKING CHANGES
+
+* config `markdown.links.externalIcon` is removed, use plugin-external-link-icon instead
+* frontmatter `externalIcon` is removed, use `externalLinkIcon` from plugin-external-link-icon
+* component `OutboundLink` is removed, use `ExternalLinkIcon` from plugin-external-link-icon
+
+
+
+
+
+# [2.0.0-beta.28](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.27...v2.0.0-beta.28) (2021-12-17)
+
+
+### Bug Fixes
+
+* **bundler-vite:** flatten the plugins structure to avoid ordering issue (close [#535](https://github.com/vuepress/vuepress-next/issues/535)) ([b4011ac](https://github.com/vuepress/vuepress-next/commit/b4011ac9c4f02a0ff06636f6cbb6f68f63d26109))
+* **theme-default:** fix kbd color in dark mode ([#503](https://github.com/vuepress/vuepress-next/issues/503)) ([31bea57](https://github.com/vuepress/vuepress-next/commit/31bea57f855f322c1119d86bd256a5c98a983c41))
+* **theme-default:** use browser default locale in last updated date ([#462](https://github.com/vuepress/vuepress-next/issues/462)) ([3746e66](https://github.com/vuepress/vuepress-next/commit/3746e664d79dc1088e94bbb6f2eda2cf6df7cc1c))
+
+
+### Features
+
+* **core:** replace extendsPageData with extendsPage hook ([827a873](https://github.com/vuepress/vuepress-next/commit/827a873ca8f7230aeecac208f55934f824774760))
+* **core:** support extendsMarkdownOptions hook ([a1fc69b](https://github.com/vuepress/vuepress-next/commit/a1fc69bdbc65f09eedacc4f860bba1ac7175c4af))
+* **core:** support routeMeta in frontmatter ([93cdb53](https://github.com/vuepress/vuepress-next/commit/93cdb53a6134e43968b56a84f2e8bf012222436a))
+* **theme-default:** make the arrows in page nav clickable ([#540](https://github.com/vuepress/vuepress-next/issues/540)) ([e7b31fd](https://github.com/vuepress/vuepress-next/commit/e7b31fdad9d6cc410b332458800aa1e00d538643))
+* **theme-default:** support heroImageDark frontmatter (close [#526](https://github.com/vuepress/vuepress-next/issues/526)) ([#559](https://github.com/vuepress/vuepress-next/issues/559)) ([779ddaa](https://github.com/vuepress/vuepress-next/commit/779ddaa8cb46d293d3048d5ac2a425ead1322763))
+* **vuepress-webpack:** add vuepress-webpack package ([a2d9c9a](https://github.com/vuepress/vuepress-next/commit/a2d9c9ae95a9e89795bf81cd767a52770ccfa523))
+* **vuepress:** switch default bundler to vite ([e1004df](https://github.com/vuepress/vuepress-next/commit/e1004df6e892f68d31e15f252010d189a3762b52))
+
+
+### BREAKING CHANGES
+
+* **vuepress:** switch default bundler from webpack to vite
+* **core:** now `app.markdown` is only available in and after `onInitialized` hook
+* **core:** now `extendsPageOptions` hook does not allow a return value any more
+* **core:** `extendsPageData` hook should be migrated to `extendsPage` hook
+
+
+
+
+
 # [2.0.0-beta.27](https://github.com/vuepress/vuepress-next/compare/v2.0.0-beta.26...v2.0.0-beta.27) (2021-10-28)
 
 

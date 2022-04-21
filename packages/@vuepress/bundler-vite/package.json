@@ -1,6 +1,6 @@
 {
-  "name": "@vuepress/bundler-vite",
-  "version": "2.0.0-beta.27",
+  "name": "@galtproject/vuepress-bundler-vite",
+  "version": "2.0.0-beta.35.19",
   "description": "Bundler vite package of VuePress",
   "keywords": [
     "vuepress-bundler",
@@ -18,30 +18,28 @@
   },
   "license": "MIT",
   "author": "Evan You",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "node" : ">=16.0.0",
   "scripts": {
-    "build": "tsc -b tsconfig.build.json",
-    "clean": "rimraf lib *.tsbuildinfo"
+    "build": "yarn && tsc -b tsconfig.build.json",
+    "build-and-publish": "npm run build && cp package.json lib/ && npm publish ./lib --access public"
   },
   "dependencies": {
-    "@vitejs/plugin-vue": "^1.10.2",
-    "@vue/compiler-sfc": "^3.2.24",
-    "@vue/server-renderer": "^3.2.24",
-    "@vuepress/client": "2.0.0-beta.27",
-    "@vuepress/core": "2.0.0-beta.27",
-    "@vuepress/shared": "2.0.0-beta.27",
-    "@vuepress/utils": "2.0.0-beta.27",
-    "autoprefixer": "^10.4.0",
+    "@vitejs/plugin-vue": "^2.1.0",
+    "@vue/compiler-sfc": "^3.2.28",
+    "@vue/server-renderer": "^3.2.28",
+    "@vuepress/client": "2.0.0-beta.35",
+    "@vuepress/core": "2.0.0-beta.35",
+    "@vuepress/shared": "2.0.0-beta.35",
+    "@vuepress/utils": "2.0.0-beta.35",
+    "autoprefixer": "^10.4.2",
     "connect-history-api-fallback": "^1.6.0",
-    "postcss": "^8.4.4",
-    "postcss-csso": "^5.0.1",
-    "rollup": "^2.60.2",
-    "vite": "^2.7.1",
-    "vue": "^3.2.24",
+    "postcss": "^8.4.5",
+    "postcss-csso": "^6.0.0",
+    "rollup": "^2.66.0",
+    "vite": "^2.7.13",
+    "vue": "^3.2.28",
     "vue-router": "^4.0.12"
   },
   "publishConfig": {

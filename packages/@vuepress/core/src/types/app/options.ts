@@ -1,51 +1,59 @@
 import type { MarkdownOptions } from '@vuepress/markdown'
-import type { SiteLocaleConfig, SiteLocaleData } from '@vuepress/shared'
+import type { SiteData } from '@vuepress/shared'
 import type { BundlerConfig } from '../bundler'
 import type { PluginConfig } from '../plugin'
 import type { ThemeConfig } from '../theme'
 
 /**
- * Vuepress app options
+ * Config to create vuepress app
  */
-export interface AppOptions<
+export type AppConfig<
   T extends ThemeConfig = ThemeConfig,
   U extends BundlerConfig = BundlerConfig
-> extends SiteLocaleData {
-  // site options
-  base: string
-  locales: SiteLocaleConfig
+> = Partial<SiteData> &
+  AppConfigDev &
+  AppConfigBuild & {
+    theme?: string
+    themeConfig?: Partial<T>
+    bundler?: string
+    bundlerConfig?: Partial<U>
 
-  // theme options
-  theme: string
-  themeConfig: Partial<T>
+    source: string
+    dest?: string
+    temp?: string
+    cache?: string
+    public?: string
 
-  // bundler options
-  bundler: string
-  bundlerConfig: Partial<U>
+    debug?: boolean
+    pagePatterns?: string[]
 
-  // directory options
-  source: string
-  dest: string
-  temp: string
-  cache: string
-  public: string
+    markdown?: MarkdownOptions
+    plugins?: PluginConfig[]
+  }
 
-  // markdown options
-  markdown: MarkdownOptions
-
-  // development options
-  debug: boolean
-  host: string
-  port: number
-  open: boolean
-  pagePatterns: string[]
-  templateDev: string
-  templateSSR: string
-  shouldPreload: ((file: string, type: string) => boolean) | boolean
-  shouldPrefetch: ((file: string, type: string) => boolean) | boolean
-
-  // plugin options
-  plugins: PluginConfig[]
+/**
+ * Vuepress app config for dev
+ */
+export interface AppConfigDev {
+  host?: string
+  port?: number
+  open?: boolean
+  templateDev?: string
 }
 
-export type AppConfig = Partial<AppOptions> & Pick<AppOptions, 'source'>
+/**
+ * Vuepress app config for build
+ */
+export interface AppConfigBuild {
+  shouldPreload?: ((file: string, type: string) => boolean) | boolean
+  shouldPrefetch?: ((file: string, type: string) => boolean) | boolean
+  templateBuild?: string
+}
+
+/**
+ * Vuepress app options
+ */
+export type AppOptions<
+  T extends ThemeConfig = ThemeConfig,
+  U extends BundlerConfig = BundlerConfig
+> = Required<AppConfig<T, U>>

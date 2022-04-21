@@ -1,6 +1,7 @@
 import { debug } from '@vuepress/utils'
 import type { App } from '../types'
-import { createAppPages } from './createAppPages'
+import { resolveAppMarkdown } from './resolveAppMarkdown'
+import { resolveAppPages } from './resolveAppPages'
 
 const log = debug('vuepress:core/app')
 
@@ -17,11 +18,11 @@ export const appInit = async (app: App): Promise<void> => {
   // hooks in plugins will take effect after `registerHooks()`
   app.pluginApi.registerHooks()
 
-  // plugin hook: extendsMarkdown
-  await app.pluginApi.hooks.extendsMarkdown.process(app.markdown, app)
+  // create markdown
+  app.markdown = await resolveAppMarkdown(app)
 
   // create pages
-  app.pages = await createAppPages(app)
+  app.pages = await resolveAppPages(app)
 
   // plugin hook: onInitialized
   await app.pluginApi.hooks.onInitialized.process(app)

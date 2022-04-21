@@ -2,7 +2,7 @@
 
 <NpmBadge package="@vuepress/bundler-webpack" />
 
-Webpack 打包工具是由 [@vuepress/bundler-webpack](https://www.npmjs.com/package/@vuepress/bundler-webpack) 包提供的。它是 [vuepress](https://www.npmjs.com/package/vuepress) 包的依赖之一，当然你也可以单独安装它：
+Webpack 打包工具是由 [@vuepress/bundler-webpack](https://www.npmjs.com/package/@vuepress/bundler-webpack) 包提供的。它是 [vuepress-webpack](https://www.npmjs.com/package/vuepress-webpack) 包的依赖之一，当然你也可以单独安装它：
 
 ```bash
 npm i -D @vuepress/bundler-webpack@next
@@ -17,7 +17,7 @@ Webpack 打包工具配置的参考文档，可以通过 [bundlerConfig](../conf
 
 ```js
 module.exports = {
-  // 在使用 vuepress 包的时候，你可以忽略这个字段，因为 Webpack 是默认打包工具
+  // 在使用 vuepress-webpack 包的时候，你可以忽略这个字段，因为 Webpack 是默认打包工具
   bundler: '@vuepress/bundler-webpack',
   // Webpack 打包工具的配置项
   bundlerConfig: {
@@ -50,7 +50,7 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 
 ### configureWebpack
 
-- 类型： `(config: WebpackConfiguration, isServer: boolean, isBuild: boolean) => WebpackConfiguration`
+- 类型： `(config: WebpackConfiguration, isServer: boolean, isBuild: boolean) => WebpackConfiguration | void`
 
 - 详情：
 
@@ -68,31 +68,18 @@ export default defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
 
   该配置项接收一个函数，该函数的第一个参数是由 `webpack-chain` 提供的 `Config` 实例，第二个参数是 `isServer` 标志位，第三个参数是 `isBuild` 标志位。
 
-### beforeDevServer
+### devServerSetupMiddlewares
 
-- 类型： `(server: WebpackDevServer) => void`
-
-- 详情：
-
-  在 Webpack 的 `devServer.before` 中调用的 Hook 。
-
-  函数的参数是 `devServer.before` 的前两个参数。
-
-- 参考：
-  - [Webpack > Configuration > DevServer > devServer.before](https://webpack.js.org/configuration/dev-server/#devserverbefore)
-
-### afterDevServer
-
-- 类型： `(server: WebpackDevServer) => void`
+- 类型： `(middlewares: Middleware[], devServer: Server) => Middleware[]`
 
 - 详情：
 
-  在 Webpack 的 `devServer.after` 中调用的 Hook 。
+  在 Webpack 的 `devServer.setupMiddlewares` 中调用的 Hook 。
 
-  函数的参数是 `devServer.after` 的前两个参数。
+  函数的参数即是 `devServer.setupMiddlewares` 的参数。
 
 - 参考：
-  - [Webpack > Configuration > DevServer > devServer.after](https://webpack.js.org/configuration/dev-server/#devserverafter)
+  - [Webpack > Configuration > DevServer > devServer.setupMiddlewares](https://webpack.js.org/configuration/dev-server/#devserversetupmiddlewares)
 
 ### vue
 

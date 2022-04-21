@@ -9,7 +9,8 @@ import { renderPagePrefetchLinks } from './renderPagePrefetchLinks'
 import { renderPagePreloadLinks } from './renderPagePreloadLinks'
 import { renderPageScripts } from './renderPageScripts'
 import { renderPageStyles } from './renderPageStyles'
-import { resolvePageChunkFiles } from './resolvePageChunkFiles'
+import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
+import {resolvePageChunkFiles} from "./resolvePageChunkFiles";
 
 export const renderPage = async ({
   app,
@@ -27,8 +28,8 @@ export const renderPage = async ({
   vueRouter: VueRouter
   ssrTemplate: string
   output: RollupOutput['output']
-  outputEntryChunk: OutputChunk
-  outputCssAsset: OutputAsset
+  outputEntryChunk: OutputIpfsChunk
+  outputCssAsset: OutputIpfsAsset
 }): Promise<void> => {
   // switch to current page route
   await vueRouter.push(page.path)
@@ -41,10 +42,10 @@ export const renderPage = async ({
   }
 
   // render current page to string
-  const pageRendered = await renderToString(vueApp, ssrContext)
+  const pageRendered = await renderToString(vueApp, ssrContext);
 
   // resolve page chunks
-  const pageChunkFiles = resolvePageChunkFiles({ page, output })
+  const pageChunkFiles = resolvePageChunkFiles({ page, output });
 
   // generate html string
   const html = ssrTemplate
@@ -60,11 +61,11 @@ export const renderPage = async ({
     // page preload & prefetch links
     .replace(
       '<!--vuepress-ssr-resources-->',
-      `${renderPagePreloadLinks({
+      `${await renderPagePreloadLinks({
         app,
         outputEntryChunk,
         pageChunkFiles,
-      })}${renderPagePrefetchLinks({
+      })}${await renderPagePrefetchLinks({
         app,
         outputEntryChunk,
         pageChunkFiles,
@@ -73,13 +74,13 @@ export const renderPage = async ({
     // page styles
     .replace(
       '<!--vuepress-ssr-styles-->',
-      renderPageStyles({ app, outputCssAsset })
+      await renderPageStyles({ app, outputCssAsset })
     )
     .replace('<!--vuepress-ssr-app-->', pageRendered)
     // page scripts
     .replace(
       '<!--vuepress-ssr-scripts-->',
-      renderPageScripts({ app, outputEntryChunk })
+      await renderPageScripts({ app, outputEntryChunk })
     )
 
   // write html file

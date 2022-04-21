@@ -1,7 +1,7 @@
 import type { App } from '@vuepress/core'
 import { fs } from '@vuepress/utils'
 import * as history from 'connect-history-api-fallback'
-import type { Plugin } from 'vite'
+import type { Connect, Plugin } from 'vite'
 import type { ViteBundlerOptions } from '../types'
 import { resolveAlias } from './resolveAlias'
 import { resolveDefine } from './resolveDefine'
@@ -13,8 +13,8 @@ const clientPackages = [
   '@vuepress/plugin-active-header-links',
   '@vuepress/plugin-back-to-top',
   '@vuepress/plugin-container',
-  '@vuepress/plugin-debug',
   '@vuepress/plugin-docsearch',
+  '@vuepress/plugin-external-link-icon',
   '@vuepress/plugin-git',
   '@vuepress/plugin-google-analytics',
   '@vuepress/plugin-medium-zoom',
@@ -28,6 +28,7 @@ const clientPackages = [
   '@vuepress/plugin-shiki',
   '@vuepress/plugin-theme-data',
   '@vuepress/plugin-toc',
+  '@vuepress/shared',
   '@vuepress/theme-default',
 ]
 
@@ -131,7 +132,7 @@ import '@vuepress/client/lib/app.js'
               to: '/index.html',
             },
           ],
-        })
+        }) as Connect.NextHandleFunction
       )
     }
   },

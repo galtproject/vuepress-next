@@ -1,11 +1,12 @@
 import type { CreateVueAppFunction } from '@vuepress/client'
 import type { App, Bundler } from '@vuepress/core'
 import { chalk, fs, ora, withSpinner } from '@vuepress/utils'
-import type { OutputAsset, OutputChunk, RollupOutput } from 'rollup'
+import type { OutputChunk, RollupOutput } from 'rollup'
 import { build } from 'vite'
 import type { ViteBundlerOptions } from '../types'
 import { renderPage } from './renderPage'
 import { resolveViteConfig } from './resolveViteConfig'
+import {OutputIpfsAsset, OutputIpfsChunk} from "./interface";
 
 export const createBuild =
   (options: ViteBundlerOptions): Bundler['build'] =>
@@ -30,35 +31,53 @@ export const createBuild =
         build(clientConfig) as Promise<RollupOutput>,
         build(serverConfig) as Promise<RollupOutput>,
       ])
-    })
+    });
+
+    // get client bundle entry chunk and css asset
+    const clientEntryChunk = clientOutput.output.find(
+      (item) => item.type === 'chunk' && item.isEntry
+    ) as OutputIpfsChunk;
+    const clientCssAsset = clientOutput.output.find(
+      (item) => item.type === 'asset' && item.fileName.endsWith('.css')
+    ) as OutputIpfsAsset;
+
+
+    const { bundlerConfig } = app.options;
+    if (bundlerConfig && bundlerConfig.storeFolder) {
+      const {baseStorageUri} = bundlerConfig;
+      const assetsDirIpfsHash = await bundlerConfig.storeFolder(app.dir.dest('assets'));
+      for (let i = 0; i < clientOutput.output.length; i++) {
+        for (let i = 0; i < clientOutput.output.length; i++) {
+          clientOutput.output[i].fileName = replaceAssetsWithIpfs(clientOutput.output[i].fileName);
+          if ((clientOutput.output[i] as any).imports) {
+            (clientOutput.output[i] as any).imports = (clientOutput.output[i] as any).imports.map(i => replaceAssetsWithIpfs(i));
+          }
+          if ((clientOutput.output[i] as any).dynamicImports) {
+            (clientOutput.output[i] as any).dynamicImports = (clientOutput.output[i] as any).dynamicImports.map(i => replaceAssetsWithIpfs(i));
+          }
+        }
+      }
+
+      function replaceAssetsWithIpfs(name) {
+        return name.replace('assets/', baseStorageUri + assetsDirIpfsHash + '/');
+      }
+    }
 
     // render pages
     await withSpinner('Rendering pages')(async () => {
       // load ssr template file
       const ssrTemplate = (
-        await fs.readFile(app.options.templateSSR)
+        await fs.readFile(app.options.templateBuild)
       ).toString()
-
-      // get client bundle entry chunk and css asset
-      const clientEntryChunk = clientOutput.output.find(
-        (item) => item.type === 'chunk' && item.isEntry
-      ) as OutputChunk
-      const clientCssAsset = clientOutput.output.find(
-        (item) => item.type === 'asset' && item.fileName.endsWith('.css')
-      ) as OutputAsset
-
       // get server bundle entry chunk
       const serverEntryChunk = serverOutput.output.find(
         (item) => item.type === 'chunk' && item.isEntry
       ) as OutputChunk
 
       // load the compiled server bundle
-      const { createVueApp } = require(app.dir.dest(
-        '.server',
-        serverEntryChunk.fileName
-      )) as {
-        createVueApp: CreateVueAppFunction
-      }
+      const serverEntryPath = app.dir.dest('.server', serverEntryChunk.fileName);
+      delete require.cache[serverEntryPath];
+      const { createVueApp } = require(serverEntryPath) as { createVueApp: CreateVueAppFunction };
 
       // create vue ssr app
       const { app: vueApp, router: vueRouter } = await createVueApp()

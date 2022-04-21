@@ -286,7 +286,7 @@ module.exports = {
 
   To configure the sidebar items manually, you can set this option to a _sidebar array_, each item of which could be a `SidebarItem` object or a string:
 
-  - A `SidebarItem` object should have a `text` field, could have an optional `link` field and an optional `children` field. The `children` field should be a _sidebar array_.
+  - A `SidebarItem` object should have a `text` field, could have an optional `link` field and an optional `children` field. The `children` field should be a _sidebar array_. When a `SidebarItem` object is placed at the root-level, it could have an extra optional `collapsible` field to control whether it is collapsible.
   - A string should be the path to the target page file. It will be converted to a `SidebarItem` object, whose `text` is the page title, `link` is the page route path, and `children` is automatically generated from the page headers.
 
   If you want to set different sidebar for different sub paths, you can set this option to a _sidebar object_:
@@ -342,6 +342,30 @@ module.exports = {
         {
           text: 'Reference',
           children: ['/reference/cli.md', '/reference/config.md'],
+        },
+      ],
+    },
+  },
+}
+```
+
+- Example 3:
+
+```js
+module.exports = {
+  themeConfig: {
+    // collapsible sidebar
+    sidebar: {
+      '/reference/': [
+        {
+          text: 'VuePress Reference',
+          collapsible: true,
+          children: ['/reference/cli.md', '/reference/config.md'],
+        },
+        {
+          text: 'Bundlers Reference',
+          collapsible: true,
+          children: ['/reference/bundler/vite.md', '/reference/bundler/webpack.md'],
         },
       ],
     },
@@ -571,9 +595,12 @@ The generated link will look like `'https://gitlab.com/owner/name/-/edit/master/
 
 - Details:
 
-  Specify the `sr-only` text of the [OutboundLink](../components.md#outboundlink).
+  Specify the `sr-only` text of the [ExternalLinkIcon](../plugin/external-link-icon.md#externallinkicon).
 
   This is mainly for a11y purpose.
+
+- Also see:
+  - [Default Theme > Config Reference > themePlugins.externalLinkIcon](#themeplugins-externallinkicon)
 
 ### toggleDarkMode
 
@@ -648,6 +675,16 @@ The generated link will look like `'https://gitlab.com/owner/name/-/edit/master/
 
 - Also see:
   - [Default Theme > Markdown > Custom Containers](./markdown.md#custom-containers)
+
+### themePlugins.externalLinkIcon
+
+- Type: `boolean`
+
+- Default: `true`
+
+- Details:
+
+  Enable [@vuepress/plugin-external-link-icon](../plugin/external-link-icon.md) or not.
 
 ### themePlugins.git
 

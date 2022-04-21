@@ -1,14 +1,15 @@
 import type { App } from '@vuepress/core'
-import type { OutputAsset } from 'rollup'
+import {OutputIpfsAsset} from "./interface";
 
 /**
  * Render styles of current page
  */
-export const renderPageStyles = ({
+export const renderPageStyles = async ({
   app,
   outputCssAsset,
 }: {
   app: App
-  outputCssAsset: OutputAsset
-}): string =>
-  `<link rel="stylesheet" href="${app.options.base}${outputCssAsset.fileName}">`
+  outputCssAsset: OutputIpfsAsset
+}): Promise<string> => {
+  return `<link rel="stylesheet" href="${outputCssAsset.fileName.startsWith('http') ? '' : app.options.base}${outputCssAsset.fileName}">`;
+}

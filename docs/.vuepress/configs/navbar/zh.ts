@@ -25,8 +25,8 @@ export const zh: NavbarConfig = [
       {
         text: '打包工具',
         children: [
-          '/zh/reference/bundler/webpack.md',
           '/zh/reference/bundler/vite.md',
+          '/zh/reference/bundler/webpack.md',
         ],
       },
       {
@@ -37,6 +37,7 @@ export const zh: NavbarConfig = [
           '/zh/reference/default-theme/components.md',
           '/zh/reference/default-theme/markdown.md',
           '/zh/reference/default-theme/styles.md',
+          '/zh/reference/default-theme/extending.md',
         ],
       },
     ],
@@ -49,6 +50,7 @@ export const zh: NavbarConfig = [
         children: [
           '/zh/reference/plugin/back-to-top.md',
           '/zh/reference/plugin/container.md',
+          '/zh/reference/plugin/external-link-icon.md',
           '/zh/reference/plugin/google-analytics.md',
           '/zh/reference/plugin/medium-zoom.md',
           '/zh/reference/plugin/nprogress.md',
@@ -80,7 +82,6 @@ export const zh: NavbarConfig = [
         text: '主题开发',
         children: [
           '/zh/reference/plugin/active-header-links.md',
-          '/zh/reference/plugin/debug.md',
           '/zh/reference/plugin/git.md',
           '/zh/reference/plugin/palette.md',
           '/zh/reference/plugin/theme-data.md',

@@ -28,8 +28,8 @@ export const en: NavbarConfig = [
       {
         text: 'Bundlers',
         children: [
-          '/reference/bundler/webpack.md',
           '/reference/bundler/vite.md',
+          '/reference/bundler/webpack.md',
         ],
       },
       {
@@ -40,6 +40,7 @@ export const en: NavbarConfig = [
           '/reference/default-theme/components.md',
           '/reference/default-theme/markdown.md',
           '/reference/default-theme/styles.md',
+          '/reference/default-theme/extending.md',
         ],
       },
     ],
@@ -52,6 +53,7 @@ export const en: NavbarConfig = [
         children: [
           '/reference/plugin/back-to-top.md',
           '/reference/plugin/container.md',
+          '/reference/plugin/external-link-icon.md',
           '/reference/plugin/google-analytics.md',
           '/reference/plugin/medium-zoom.md',
           '/reference/plugin/nprogress.md',
@@ -83,7 +85,6 @@ export const en: NavbarConfig = [
         text: 'Theme Development',
         children: [
           '/reference/plugin/active-header-links.md',
-          '/reference/plugin/debug.md',
           '/reference/plugin/git.md',
           '/reference/plugin/palette.md',
           '/reference/plugin/theme-data.md',
